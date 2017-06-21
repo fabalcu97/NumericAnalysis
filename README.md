@@ -1,15 +1,17 @@
 #### Methods:
 
 * Bisection
-* False position
-* Newton
-* Secant
-* Runge Kutta
 * Euler
-* Simpson
+* Runge Kutta
+* Heun
+* False position
+* Fixed point
 * Lagrange
+* Newton
 * Newton Generalized
 * Riemann Summatory
+* Secant
+* Simpson
 
 #### To build:
 
