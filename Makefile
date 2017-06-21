@@ -1,25 +1,11 @@
 COMPILER = fpc
-OPTIONS = -Fu/home/fabalcu97/Programming/AN/Métodos/Common/
+ROUTE = -Fu
+DIRECTORY = $(sort $(dir $(wildcard ./*/)))
+LIBRARIES := $(foreach library, $(DIRECTORY), $(ROUTE)$(library))
 
-riemann:
-	$(COMPILER) $(OPTIONS) RiemannSum/main.pas
-	RiemannSum/./main
-
-lagrange:
-	$(COMPILER) $(OPTIONS) Lagrange/main.pas
-	lagrange/./main
-
-ngen:
-	$(COMPILER) $(OPTIONS) NewtonGeneralized/main.pas
-	NewtonGeneralized/./main
-
-euler:
-	$(COMPILER) $(OPTIONS) Euler/main.pas
-	Euler/./main
-
-simpson:
-	$(COMPILER) $(OPTIONS) Simpson/main.pas
-	Simpson/./main
+all:
+	$(COMPILER) $(LIBRARIES) main.pas
+	./main
 
 clean:
-	rm */*.o */*.ppu */main
+	rm */*.o */*.ppu main main.o

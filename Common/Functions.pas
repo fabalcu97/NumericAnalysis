@@ -17,6 +17,9 @@ type
         function evaluatePartialDerivatives(equation: String; values: TNumericMatrix): Real;
         function evaluate(equation: String; value: Real): Real;
         function evaluate(equation: String; variable: Array of Real): Real;
+        function sign(a: Real; b: Real): Integer;
+        procedure print(matrix: TNumericMatrix);
+        procedure print(list: TNumericList);
     end;
 implementation
 
@@ -29,6 +32,31 @@ implementation
         begin
             
         end;
+
+    procedure TFunctions.print(matrix: TNumericMatrix);
+      var
+        i: Integer;
+        j: Integer;
+      begin
+        for i := 0 to Length(matrix)-1 do
+          begin
+            for j := 0 to Length(matrix[i])-1 do
+            begin
+              Write(matrix[i][j],  '-' );
+            end;
+            WriteLn();
+          end;
+      end;
+
+    procedure TFunctions.print(list: TNumericList);
+      var
+        i: Integer;
+      begin
+        for i := 0 to Length(list)-1 do
+          begin
+            Write(list[i],  '-' );
+          end;
+      end;
     
     (* Variables from 'a' to 'z' *)
     function TFunctions.Jacobian(equations: TEquationsList; values: TNumericMatrix): TNumericMatrix;
@@ -107,9 +135,10 @@ implementation
             n: integer;
         begin
             Parser := TParseMath.create();
+            Parser.AddVariable('a', 0);
             n := Length(variable);
             varChar := 'x';
-            Parser.Expression := equation;
+            Parser.Expression := equation + '+a';
             for i := 0 to n-1 do
             begin
                 Parser.AddVariable(varChar, variable[i]);
@@ -120,4 +149,13 @@ implementation
             result := Parser.Evaluate();
             Parser.destroy;
         end;
+    function TFunctions.sign(a: Real; b: Real): Integer;
+      begin
+        if ((a * b) < 0) then 
+          begin
+            Result := -1;
+            exit;
+          end;
+        Result := 1;
+      end;
 end.

@@ -50,15 +50,15 @@ begin
 
 end;
 
-function TParseMath.Evaluate(): Double;
-begin
-     FParser.Expression:= Expression;
-     Result:= FParser.Evaluate.ResFloat;
-end;
-
 function IsNumber(AValue: TExprFloat): Boolean;
 begin
   result := not (IsNaN(AValue) or IsInfinite(AValue) or IsInfinite(-AValue));
+end;
+
+function TParseMath.Evaluate(): Double;
+begin
+    FParser.Expression:= Expression;
+    Result:= FParser.Evaluate.ResFloat;
 end;
 
 Procedure ExprTan( var Result: TFPExpressionResult; Const Args: TExprParameterArray);
