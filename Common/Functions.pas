@@ -1,9 +1,9 @@
 unit Functions;
 
 {$mode objfpc}{$H+}
-    
+
 interface
-    
+
 uses
     SysUtils, Classes, ParseMath, Matrix;
 
@@ -20,17 +20,18 @@ type
         function sign(a: Real; b: Real): Integer;
         procedure print(matrix: TNumericMatrix);
         procedure print(list: TNumericList);
+        function bolzano(a: Real; b: Real): Boolean;
     end;
 implementation
 
     constructor TFunctions.Create;
         begin
-            
+
         end;
-    
+
     destructor TFunctions.Destroy;
         begin
-            
+
         end;
 
     procedure TFunctions.print(matrix: TNumericMatrix);
@@ -57,7 +58,17 @@ implementation
             Write(list[i],  '-' );
           end;
       end;
-    
+
+    function TFunctions.bolzano(a: Real; b: Real): Boolean;
+      begin
+        if( (a*b) < 0 ) then
+          begin
+            Result := True;
+            exit;
+          end;
+        Result := False;
+      end;
+
     (* Variables from 'a' to 'z' *)
     function TFunctions.Jacobian(equations: TEquationsList; values: TNumericMatrix): TNumericMatrix;
         var
@@ -89,10 +100,10 @@ implementation
 
             values[variable, 0] := values[variable, 0] + h;
             fxh := evaluatePartialDerivatives(equation, values);
-            
+
             values[variable, 0] := values[variable, 0] - h;
             Result := (fxh - fx) / h;
-            
+
         end;
     function TFunctions.evaluatePartialDerivatives(equation: String; values: TNumericMatrix): Real;
         var
@@ -115,7 +126,7 @@ implementation
             result := Parser.Evaluate();
             Parser.Destroy();
         end;
-    
+
     function TFunctions.evaluate(equation: String; value: Real): Real;
         var
             Parser: TParseMath;
@@ -128,7 +139,7 @@ implementation
         end;
 
     function TFunctions.evaluate(equation: String; variable: Array of Real): Real;
-        var 
+        var
             Parser: TParseMath;
             varChar: char;
             i: Integer;
@@ -151,7 +162,7 @@ implementation
         end;
     function TFunctions.sign(a: Real; b: Real): Integer;
       begin
-        if ((a * b) < 0) then 
+        if ((a * b) < 0) then
           begin
             Result := -1;
             exit;

@@ -28,6 +28,7 @@ implementation
         a := initialA;
         b := initialB;
         error := initialError;
+        F := TFunctions.Create;
       end;
 
     Destructor TBisection.Destroy();
@@ -45,14 +46,19 @@ implementation
         c: Real;
         signo: Integer;
       begin
-        F := TFunctions.Create;
         c := 0;
         eaa := error + 1;
         i := 0;
         temp_ant := 0;
+        if not F.Bolzano( F.evaluate(equation, a), F.evaluate(equation, b) ) then
+          begin
+            setLength(Result, 1, 1);
+            Result[0][0] := 0;
+            exit;
+          end;
         while eaa > error do
           begin
-            setLength(Result, i+1, 7);
+            setLength(Result, i+1, 8);
             Result[i][0] := i;
             Result[i][1] := a;
             Result[i][2] := b;

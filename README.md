@@ -1,5 +1,10 @@
 #### Methods:
 
+* Bisection
+* False position
+* Newton
+* Secant
+* Runge Kutta
 * Euler
 * Simpson
 * Lagrange
@@ -9,8 +14,8 @@
 #### To build:
 
 ```bash
-# Build and run method ie. make euler
-make {method}
-# Cleaning files
+# Build and run main file
+make main
+# Clean binary files
 make clean
 ```
