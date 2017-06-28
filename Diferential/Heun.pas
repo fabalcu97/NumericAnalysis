@@ -52,7 +52,7 @@ implementation
     var
       m: Real;
     begin
-     setLength(Result, 4, n + 1);
+     setLength(Result, n + 1, 4);
      eulerApproximation[0] := Yn[0];
      m := 0;
      i := 1;
@@ -64,10 +64,10 @@ implementation
              eulerApproximation[i] := Yn[i-1] + h*F.evaluate(derivative, [Xn[i-1], Yn[i-1]]);
              m := (F.evaluate(derivative, [Xn[i-1], Yn[i-1]]) + F.evaluate(derivative, [Xn[i], eulerApproximation[i]]))/2;
              Yn[i] := Yn[i-1] + (h * m);
-             Result[0, i-1] := i-1;
-             Result[1, i-1] := Xn[i-1];
-             Result[2, i-1] := Yn[i-1];
-             Result[3, i-1] := eulerApproximation[i-1];
+             Result[i-1, 0] := i-1;
+             Result[i-1, 1] := Xn[i-1];
+             Result[i-1, 2] := Yn[i-1];
+             Result[i-1, 3] := eulerApproximation[i-1];
              i := i + 1;
            end;
        end
@@ -79,10 +79,10 @@ implementation
              eulerApproximation[i] := Yn[i-1] + h*F.evaluate(derivative, [Xn[i-1], Yn[i-1]]);
              m := (F.evaluate(derivative, [Xn[i-1], Yn[i-1]]) + F.evaluate(derivative, [Xn[i], eulerApproximation[i]]))/2;
              Yn[i] := Yn[i-1] + (h * m);
-             Result[0, i-1] := i-1;
-             Result[1, i-1] := Xn[i-1];
-             Result[2, i-1] := Yn[i-1];
-             Result[3, i-1] := eulerApproximation[i-1];
+             Result[i-1, 0] := i-1;
+             Result[i-1, 1] := Xn[i-1];
+             Result[i-1, 2] := Yn[i-1];
+             Result[i-1, 3] := eulerApproximation[i-1];
              i := i + 1;
            end;
         end;

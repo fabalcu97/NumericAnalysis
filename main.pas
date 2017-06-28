@@ -13,6 +13,7 @@ var
     dormandPrinceSolver: TDormandPrince;
     generalizedNewtonSolver: TGeneralizedNewton;
     simpsonSolver: TSimpson;
+    eulerSolver: TEuler;
     equation: String;
     derivativeEquation: String;
 
@@ -22,23 +23,25 @@ begin
     equation := 'power(x, 2)';
     derivativeEquation := 'x*power(y, 2)';
 
-    generalizedNewtonSolver := TGeneralizedNewton.Create();
-    (*dormandPrinceSolver := TDormandPrince.create(derivativeEquation, 0, 1, 0, 1, 0.1);
+    eulerSolver := TEuler.Create(derivativeEquation, 1, 0, 1, 0.1);
+    (*generalizedNewtonSolver := TGeneralizedNewton.Create();
+    dormandPrinceSolver := TDormandPrince.create(derivativeEquation, 0, 1, 0, 1, 0.1);
     fixedPointSolver := TFixedPoint.Create(equation, derivativeEquation, 0.5, 0.0001);
     newtonSolver := TNewton.Create(equation, derivativeEquation, -1, 0.0001);
     secantSolver := TSecant.Create(equation, -1, 0.0001);
     bisectionSolver := TBisection.Create(equation, -1, 1, 0.0001);
-    falsePositionSolver := TFalsePosition.Create(equation, -1, 1, 0.0001);*)
-    simpsonSolver := TSimpson.Create('power(x, 2)', -1, 0, 15);
+    falsePositionSolver := TFalsePosition.Create(equation, -1, 1, 0.0001);
+    simpsonSolver := TSimpson.Create('power(x, 2)', -1, 0, 15);*)
 
-    F.Print(generalizedNewtonSolver.execute());
-    (*F.Print(simpsonSolver.simpson38());
+    F.Print(eulerSolver.execute());
+    (*F.Print(generalizedNewtonSolver.execute());
     F.Print(dormandPrinceSolver.execute());
     F.Print(fixedPointSolver.execute());
     F.Print(secantSolver.execute());
     F.Print(newtonSolver.execute());
     F.Print(bisectionSolver.execute());
-    F.Print(falsePositionSolver.execute());*)
+    F.Print(falsePositionSolver.execute());
+    F.Print(simpsonSolver.simpson38());*)
 
 
 end.

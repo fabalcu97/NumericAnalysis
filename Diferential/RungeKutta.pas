@@ -54,7 +54,7 @@ implementation
         k4: Real;
         m: Real;
     begin
-     setLength(Result, 8, n+1);
+     setLength(Result, n+1, 8);
      i := 1;
      if (b < 0) then
        begin
@@ -67,14 +67,14 @@ implementation
              m := (k1 + 2*k2 + 2*k3 + k4)/6;
              Xn[i] := Xn[i-1] + h;
              Yn[i] := Yn[i-1] + h*m;
-             Result[0, i-1] := i-1;
-             Result[1, i-1] := Xn[i-1];
-             Result[2, i-1] := Yn[i-1];
-             Result[3, i-1] := k1;
-             Result[4, i-1] := k2;
-             Result[5, i-1] := k3;
-             Result[6, i-1] := k4;
-             Result[7, i-1] := m;
+             Result[i-1, 0] := i-1;
+             Result[i-1, 1] := Xn[i-1];
+             Result[i-1, 2] := Yn[i-1];
+             Result[i-1, 3] := k1;
+             Result[i-1, 4] := k2;
+             Result[i-1, 5] := k3;
+             Result[i-1, 6] := k4;
+             Result[i-1, 7] := m;
              i := i + 1;
            end;
        end
@@ -89,14 +89,14 @@ implementation
              m := (k1 + 2*k2 + 2*k3 + k4)/6;
              Xn[i] := Xn[i-1] + h;
              Yn[i] := Yn[i-1] + h*m;
-             Result[0, i-1] := i-1;
-             Result[1, i-1] := Xn[i-1];
-             Result[2, i-1] := Yn[i-1];
-             Result[3, i-1] := k1;
-             Result[4, i-1] := k2;
-             Result[5, i-1] := k3;
-             Result[6, i-1] := k4;
-             Result[7, i-1] := m;
+             Result[i-1, 0] := i-1;
+             Result[i-1, 1] := Xn[i-1];
+             Result[i-1, 2] := Yn[i-1];
+             Result[i-1, 3] := k1;
+             Result[i-1, 4] := k2;
+             Result[i-1, 5] := k3;
+             Result[i-1, 6] := k4;
+             Result[i-1, 7] := m;
              i := i + 1;
            end;
         end;
