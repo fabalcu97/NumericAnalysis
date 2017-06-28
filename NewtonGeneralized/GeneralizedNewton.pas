@@ -14,7 +14,7 @@ type
     public
         constructor Create;
         destructor Destroy; override;
-        function execute(equations: TEquationsList; values: TNumericList; error: Real): TNumericList;
+        function execute(equations: TEquationsList; values: TNumericMatrix; error: Real): TNumericList;
     end;
 implementation
 
@@ -28,7 +28,7 @@ implementation
             
         end;
 
-    function TGeneralizedNewton.execute(equations: TEquationsList; values: TNumericList; error: Real): TNumericList;
+    function TGeneralizedNewton.execute(equations: TEquationsList; values: TNumericMatrix; error: Real): TNumericList;
         var 
             mat: TMatrix;
             F: TFunctions;

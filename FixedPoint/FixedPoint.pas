@@ -43,7 +43,6 @@ implementation
         era: Real;
         erpa: Real;
         xn: Real;
-        fd: Real;
       begin
         if( (F.evaluate(derivativeEquation, x) < 0) or (F.evaluate(derivativeEquation, x) > 1) ) then
           begin
