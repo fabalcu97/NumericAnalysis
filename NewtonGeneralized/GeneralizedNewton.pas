@@ -10,17 +10,21 @@ uses
 type
     TGeneralizedNewton = class
     private
-        
+        equations: TEquationsList;
+        values: TNumericMatrix;
+        error: Real;
     public
-        constructor Create;
+        constructor Create(eq: TEquationsList; val: TNumericMatrix; err: Real);
         destructor Destroy; override;
-        function execute(equations: TEquationsList; values: TNumericMatrix; error: Real): TNumericList;
+        function execute: TNumericMatrix;
     end;
 implementation
 
-    constructor TGeneralizedNewton.Create;
+    constructor TGeneralizedNewton.Create(eq: TEquationsList; val: TNumericMatrix; err: Real);
         begin
-        
+            equations := eq;
+            values := val;
+            error := err;
         end;
     
     destructor TGeneralizedNewton.Destroy;
@@ -28,7 +32,7 @@ implementation
             
         end;
 
-    function TGeneralizedNewton.execute(equations: TEquationsList; values: TNumericMatrix; error: Real): TNumericList;
+    function TGeneralizedNewton.execute(): TNumericMatrix;
         var 
             mat: TMatrix;
             F: TFunctions;
@@ -50,11 +54,10 @@ implementation
             setLength(Fx, n, 1);
             setLength(Xn1, n, 1);
             setLength(JF, n, 1);
-            setLength(Result, n);
 
             while e > error do
                 begin
-                    WriteLn('Error: ', e);
+                    setLength(Result, Length(Result)+1, 6);
 
                     for j := 0 to n-1 do
                         begin
@@ -70,12 +73,15 @@ implementation
                         e := e + sqr((Xn1[j, 0]-values[j, 0]));
                     e := sqrt(e);
 
+                    Result[i][0] := i;
+                    Result[i][1] := values[0][0];
+                    Result[i][2] := values[1][0];
+                    Result[i][3] := Xn1[0][0];
+                    Result[i][4] := Xn1[1][0];
+                    Result[i][5] := e;
+
                     i := i + 1;
                     values := Xn1;
-                end;
-            for i := 0 to n-1 do
-                begin
-                    WriteLn(values[i, 0]);
                 end;
         end;
     

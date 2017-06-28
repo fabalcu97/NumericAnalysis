@@ -113,14 +113,17 @@ implementation
         begin
             Parser := TParseMath.Create();
             n := Length(values);
-            variable  := 'a';
+            variable  := 'x';
             Parser.Expression := equation;
 
             for i := 0 to n-1 do
             begin
                 Parser.AddVariable(variable, values[i, 0]);
                 variable := succ(variable);
-
+                if variable>'z' then
+                    begin
+                        variable := 'a';
+                    end;
             end;
             result := Parser.Evaluate();
             Parser.Destroy();
@@ -145,16 +148,18 @@ implementation
             n: integer;
         begin
             Parser := TParseMath.create();
-            Parser.AddVariable('a', 0);
             n := Length(variable);
             varChar := 'x';
-            Parser.Expression := equation + '+a';
+            Parser.Expression := equation;
             for i := 0 to n-1 do
             begin
                 Parser.AddVariable(varChar, variable[i]);
                 varChar := succ(varChar);
+                WriteLn(varChar);
                 if varChar>'z' then
-                varChar := 'a';
+                    begin
+                        varChar := 'a';
+                    end;
             end;
             result := Parser.Evaluate();
             Parser.destroy;
@@ -168,16 +173,17 @@ implementation
             n: integer;
         begin
             Parser := TParseMath.create();
-            Parser.AddVariable('a', 0);
             n := Length(variable);
             varChar := 'x';
-            Parser.Expression := equation + '+a';
+            Parser.Expression := equation;
             for i := 0 to n-1 do
             begin
                 Parser.AddVariable(varChar, variable[i, 0]);
                 varChar := succ(varChar);
                 if varChar>'z' then
-                varChar := 'a';
+                    begin
+                        varChar := 'a';
+                    end;
             end;
             result := Parser.Evaluate();
             Parser.destroy;
