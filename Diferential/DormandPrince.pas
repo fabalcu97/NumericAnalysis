@@ -9,14 +9,13 @@ uses
 type
   TDormandPrince = class
     public
-    Constructor Create(deriv: string; initialA: Real; initialB: Real; initialX0: Real; initialY0: Real; initialError: Real);
+    Constructor Create(deriv: string; initialGoal: Real; initialX: Real; initialY: Real; initialError: Real);
     Destructor Destroy; Override;
     function execute(): TNumericMatrix;
   end;
 var
     derivative: String;
-    a: Real;
-    b: Real;
+    goal: Real;
     h: Real;
     error: Real;
     n: Integer;
@@ -27,27 +26,34 @@ var
 
 implementation
 
-    Constructor TDormandPrince.Create(deriv: string; initialA: Real; initialB: Real; initialX0: Real; initialY0: Real; initialError: Real);
+  Constructor TDormandPrince.Create(deriv: string; initialGoal: Real; initialX: Real; initialY: Real; initialError: Real);
+    var
+      sign: Real;
     begin
         derivative := deriv;
-        a := initialA;
-        b := initialb;
+        goal := initialGoal;
         error := initialError;
         h := error/10;
+        sign := goal - initialX;
+        if(sign < 0) then
+          begin
+            h := h*(-1);
+          end;
 
+        n := abs(round((goal - initialX) / h));
         SetLength(Xn, 1);
         SetLength(Yn, 1);
-        Xn[0] := initialX0;
-        Yn[0] := initialY0;
+        Xn[0] := initialX;
+        Yn[0] := initialY;
         F := TFunctions.Create();
     end;
 
-    Destructor TDormandPrince.Destroy();
+  Destructor TDormandPrince.Destroy();
     begin
 
     end;
 
-    function TDormandPrince.execute(): TNumericMatrix;
+  function TDormandPrince.execute(): TNumericMatrix;
     var
         k1: Real;
         k2: Real;
@@ -65,9 +71,9 @@ implementation
       hMin := h/100;
       hMax := 1;
       i := 1;
-      if (b < 0) then
+      if (goal < 0) then
         begin
-          while (Xn[i-1] > b) do
+          while (Xn[i-1] > goal) do
             begin
                 setLength(Result, Length(Result)+1, 11);
                 setLength(Xn, Length(Xn)+1);
@@ -82,7 +88,7 @@ implementation
                 Yn[i] := Yn[i-1] + (k1*35/384) + (k3*500/1113) + (k4*125/192) - (k5*2187/6784) + (k6*11/84);
                 z := Yn[i-1] + (k1*5179/57600) + (k3*7571/16695) + (k4*393/640) - (k5*92097/339200) + (k6*187/2100) + (k7*1/40);
                 diff := abs(z - Yn[n-i]);
-                newH := power((error*h)/(2*diff), (1/5))*h;
+                (*newH := power((error*h)/(2*diff), (1/5))*h;
                 if (newH < hMin) then
                   begin
                     newH := hMin;
@@ -90,7 +96,7 @@ implementation
                 if(newH > hMax) then
                   begin
                     newH := hMax;
-                  end;
+                  end;*)
                 Result[i-1, 0] := i-1;
                 Result[i-1, 1] := Xn[i-1];
                 Result[i-1, 2] := Yn[i-1];
@@ -102,14 +108,14 @@ implementation
                 Result[i-1, 8] := k6;
                 Result[i-1, 9] := k7;
                 Result[i-1, 10] := h;
-                h := newH;
+                (*h := newH;*)
                 Xn[i] := Xn[i-1] + h;
                 i := i + 1;
               end;
         end
         else
           begin
-            while (Xn[i-1] < b) do
+            while (Xn[i-1] < goal) do
               begin
                 setLength(Result, Length(Result)+1, 11);
                 setLength(Xn, Length(Xn)+1);
@@ -124,7 +130,7 @@ implementation
                 Yn[i] := Yn[i-1] + (k1*35/384) + (k3*500/1113) + (k4*125/192) - (k5*2187/6784) + (k6*11/84);
                 z := Yn[i-1] + (k1*5179/57600) + (k3*7571/16695) + (k4*393/640) - (k5*92097/339200) + (k6*187/2100) + (k7*1/40);
                 diff := abs(z - Yn[n-i]);
-                newH := power((error*h)/(2*diff), (1/5))*h;
+                (*newH := power((error*h)/(2*diff), (1/5))*h;
                 if (newH < hMin) then
                   begin
                     newH := hMin;
@@ -132,7 +138,7 @@ implementation
                 if(newH > hMax) then
                   begin
                     newH := hMax;
-                  end;
+                  end;*)
                 Result[i-1, 0] := i-1;
                 Result[i-1, 1] := Xn[i-1];
                 Result[i-1, 2] := Yn[i-1];
@@ -144,7 +150,7 @@ implementation
                 Result[i-1, 8] := k6;
                 Result[i-1, 9] := k7;
                 Result[i-1, 10] := h;
-                h := newH;
+                (*h := newH;*)
                 Xn[i] := Xn[i-1] + h;
                 i := i + 1;
               end;
